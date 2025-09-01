@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_details",
+  "info": {
+    "singularName": "user-detail",
+    "pluralName": "user-details",
+    "displayName": "User Detail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "date_of_birth": {
+      "type": "date"
+    },
+    "address": {
+      "type": "text"
+    },
+    "bank_account_number": {
+      "type": "string",
+      "required": true
+    },
+    "ifsc_code": {
+      "type": "string",
+      "required": true
+    },
+    "branch": {
+      "type": "string",
+      "required": false
+    },
+    "joining_date": {
+      "type": "date"
+    }
+  }
+}
