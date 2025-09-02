@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -7,6 +8,10 @@ import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+import { createUser } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -24,14 +29,27 @@ export function UserForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-    // TODO: connect to Strapi API later
+  const router = useRouter();
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      await createUser(data);
+      setMessage({ type: "success", text: "User saved successfully!" });
+
+      // Redirect to /users after short delay
+      setTimeout(() => {
+        router.push("/users");
+      }, 1000);
+    } catch (err) {
+      console.error(err);
+      setMessage({ type: "error", text: "Failed to save user." });
+    }
   };
 
   return (
@@ -39,6 +57,13 @@ export function UserForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-4 bg-white p-6 shadow rounded-lg"
     >
+      {message && (
+        <Alert className={message.type === "success" ? "border-green-500" : "border-red-500"}>
+          <AlertTitle>{message.type === "success" ? "Success" : "Error"}</AlertTitle>
+          <AlertDescription>{message.text}</AlertDescription>
+        </Alert>
+      )}
+
       <div>
         <label className="block text-sm font-medium">Name</label>
         <Input {...register("name")} placeholder="Enter full name" />
@@ -95,7 +120,9 @@ export function UserForm() {
         )}
       </div>
 
-      <Button type="submit">Submit</Button>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Saving..." : "Submit"}
+      </Button>
     </form>
   );
 }
