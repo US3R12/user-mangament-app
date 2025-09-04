@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SunIcon, MoonIcon, UserIcon } from "@heroicons/react/24/outline";
+import ThemeSwitch from "./ThemeSwitch";
 
 type HeaderProps = {
   dark: boolean;
@@ -15,12 +16,8 @@ const nav = [
   { name: "Add User", href: "/user" },
 ];
 
-export default function Header({ dark, setDark }: HeaderProps) {
+export default function Header() {
   const pathname = usePathname();
-
-  const toggleDark = () => {
-    setDark(!dark);
-  };
 
   return (
     <header className="w-full bg-neutral-900 dark:bg-black border-b border-neutral-800/80 sticky top-0 z-50 transition-colors duration-300">
@@ -48,14 +45,7 @@ export default function Header({ dark, setDark }: HeaderProps) {
         </div>
         {/* Right: Dark mode toggle and avatar */}
         <div className="flex items-center space-x-4 min-w-[92px] justify-end">
-          <button
-            onClick={toggleDark}
-            aria-label="Toggle dark mode"
-            className="p-2 rounded-full hover:bg-neutral-800 dark:hover:bg-neutral-700 text-yellow-400 transition"
-            type="button"
-          >
-            {dark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-          </button>
+          <ThemeSwitch />
           <img
             src="https://i.ibb.co/9kBkZqRP/avatar1.jpg"
             className="rounded-full w-8 h-8 bg-neutral-700 ring-2 ring-neutral-900"
