@@ -2,6 +2,7 @@
 
 import "./styles/globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-white dark:bg-black text-black dark:text-white min-h-screen transition-colors duration-300">
         <Header dark={dark} setDark={setDark} />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
