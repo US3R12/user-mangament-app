@@ -11,7 +11,6 @@ Frontend: Next.js (TS)
 git clone <your-repo-url>
 cd <your-project-folder>
 
-text
 
 2. **Install dependencies**
 
@@ -20,7 +19,6 @@ npm install
 or
 yarn install
 
-text
 
 ---
 
@@ -35,7 +33,6 @@ text
 cd backend
 npm run develop
 
-text
 
 ### Frontend
 
@@ -47,7 +44,6 @@ npm run dev
 or
 yarn dev
 
-text
 
 - Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
