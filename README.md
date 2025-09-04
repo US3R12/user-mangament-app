@@ -31,6 +31,7 @@ yarn install
 - Run the backend server (adjust according to your backend setup)
 
 cd backend
+
 npm run develop
 
 
