@@ -4,7 +4,8 @@ import { UserGroupIcon, ArrowTrendingUpIcon, BuildingLibraryIcon, BookmarkIcon }
 
 // Strapi endpoint (update to match your actual host)
 const API_URL =
-  "http://localhost:1337/api/user-details?pagination[page]=1&pagination[pageSize]=100";
+  "(process.env.NEXT_PUBLIC_API_URL || "https://strapi-backend-4xxv.onrender.com")
+  .replace(/\/$/, "") + "/api/user-details?pagination[page]=1&pagination[pageSize]=100";
 
 type User = {
   id: number;
