@@ -4,7 +4,10 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['http://localhost:3000'],
+      origin: [
+        'http://localhost:3000',                // local dev
+        'https://your-frontend.netlify.app',   // Netlify frontend
+      ],
       methods: ['GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS'],
       headers: '*',
     },
