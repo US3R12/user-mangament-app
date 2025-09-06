@@ -6,7 +6,7 @@ module.exports = [
     config: {
       origin: [
         'http://localhost:3000',                // local dev
-        'https://faizals-user-management.netlify.app/',   // Netlify frontend
+        'https://faizals-user-management.netlify.app',   // Netlify frontend
       ],
       methods: ['GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS'],
       headers: '*',
