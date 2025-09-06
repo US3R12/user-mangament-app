@@ -35,7 +35,7 @@ export default function UserList() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const pageSize = 5;
   
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://strapi-backend-4xxv.onrender.com").replace(/\/$/, "");
 
   const fetchUsers = async (
     pageNumber = 1,

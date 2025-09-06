@@ -36,7 +36,7 @@ export default function UserForm() {
     e.preventDefault();
     setIsSubmitting(true);
   
-  const API_URL = process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://strapi-backend-4xxv.onrender.com").replace(/\/$/, "");
   
     try {
       const response = await fetch(`${API_URL}/api/user-details`, {
