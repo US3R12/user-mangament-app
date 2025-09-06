@@ -24,6 +24,8 @@ type User = {
   joining_date: string;
 };
 
+
+
 export default function UserList() {
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
@@ -32,6 +34,8 @@ export default function UserList() {
   const [sortField, setSortField] = useState<keyof User | "">("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const pageSize = 5;
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchUsers = async (
     pageNumber = 1,
@@ -54,7 +58,7 @@ export default function UserList() {
         params.append("_sort", `${sortFieldName}:${sortDirection}`);
       }
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user-details?${params.toString()}`
+        `${API_URL}/api/user-details?${params.toString()}`
       );
       const data = await res.json();
       setUsers(data.data);
