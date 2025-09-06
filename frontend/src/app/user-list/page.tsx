@@ -54,7 +54,7 @@ export default function UserList() {
         params.append("_sort", `${sortFieldName}:${sortDirection}`);
       }
       const res = await fetch(
-        `http://localhost:1337/api/user-details?${params.toString()}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user-details?${params.toString()}`
       );
       const data = await res.json();
       setUsers(data.data);

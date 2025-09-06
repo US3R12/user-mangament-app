@@ -37,7 +37,7 @@ export default function UserForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:1337/api/user-details", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: formData }),
