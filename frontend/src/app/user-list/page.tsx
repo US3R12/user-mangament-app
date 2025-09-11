@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { TrashIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type User = {
   id: number;
@@ -24,8 +24,6 @@ type User = {
   joining_date: string;
 };
 
-
-
 export default function UserList() {
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
@@ -34,7 +32,7 @@ export default function UserList() {
   const [sortField, setSortField] = useState<keyof User | "">("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const pageSize = 5;
-  
+
   const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://strapi-backend-4xxv.onrender.com").replace(/\/$/, "");
 
   const fetchUsers = async (
@@ -90,15 +88,13 @@ export default function UserList() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 dark:bg-black p-6 transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground p-6 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-neutral-900 dark:bg-gray-900 rounded-2xl shadow border border-neutral-800 p-8 transition-colors duration-300">
+        <div className="bg-card rounded-2xl shadow border border-border p-8 transition-colors duration-300">
           {/* Header */}
           <div className="mb-4">
-            <h1 className="text-2xl font-bold text-white mb-1">
-              User Management
-            </h1>
-            <p className="text-neutral-300">
+            <h1 className="text-2xl font-bold">User Management</h1>
+            <p className="text-muted-foreground">
               Manage user information and view all registered users.
             </p>
           </div>
@@ -106,7 +102,7 @@ export default function UserList() {
           {/* Search Bar */}
           <div className="mb-6">
             <div className="relative">
-              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 placeholder="Search users by name, address, branch, account number, or IFSC..."
                 value={search}
@@ -114,24 +110,24 @@ export default function UserList() {
                   setPage(1);
                   setSearch(e.target.value);
                 }}
-                className="w-full pl-10 bg-neutral-800 dark:bg-gray-800 text-white border-neutral-700 placeholder:text-neutral-400 focus-visible:ring-blue-500 transition-colors duration-300"
+                className="w-full pl-10 bg-muted text-foreground border-border placeholder:text-muted-foreground focus-visible:ring-blue-500 transition-colors duration-300"
               />
             </div>
           </div>
           <div className="mb-4">
-            <p className="text-neutral-400 text-sm">
+            <p className="text-sm text-muted-foreground">
               Total Users: {users.length}
             </p>
           </div>
 
           {/* Table */}
-          <div className="rounded-lg border border-neutral-700 overflow-x-auto transition-colors duration-300">
+          <div className="rounded-lg border border-border overflow-x-auto transition-colors duration-300">
             <Table>
               <TableHeader>
-                <TableRow className="bg-neutral-800 dark:bg-gray-800">
+                <TableRow className="bg-muted/50">
                   <TableHead
                     onClick={() => handleSort("name")}
-                    className="cursor-pointer text-white font-semibold py-4"
+                    className="cursor-pointer font-semibold py-4"
                   >
                     Name{" "}
                     {sortField === "name"
@@ -140,18 +136,14 @@ export default function UserList() {
                         : "▼"
                       : ""}
                   </TableHead>
-                  <TableHead className="text-white font-semibold">
-                    Date of Birth
-                  </TableHead>
-                  <TableHead className="text-white font-semibold">Address</TableHead>
-                  <TableHead className="text-white font-semibold">
-                    Account Number
-                  </TableHead>
-                  <TableHead className="text-white font-semibold">IFSC</TableHead>
-                  <TableHead className="text-white font-semibold">Branch</TableHead>
+                  <TableHead>Date of Birth</TableHead>
+                  <TableHead>Address</TableHead>
+                  <TableHead>Account Number</TableHead>
+                  <TableHead>IFSC</TableHead>
+                  <TableHead>Branch</TableHead>
                   <TableHead
                     onClick={() => handleSort("joining_date")}
-                    className="cursor-pointer text-white font-semibold"
+                    className="cursor-pointer font-semibold"
                   >
                     Joining Date{" "}
                     {sortField === "joining_date"
@@ -166,12 +158,10 @@ export default function UserList() {
                 {users.map((user) => (
                   <TableRow
                     key={user.id}
-                    className="bg-neutral-900 dark:bg-gray-900 hover:bg-neutral-800 dark:hover:bg-gray-800 border-b border-neutral-700 transition-colors duration-300"
+                    className="bg-background hover:bg-muted/50 border-b border-border transition-colors duration-300"
                   >
-                    <TableCell className="text-white font-medium">
-                      {user.name || "-"}
-                    </TableCell>
-                    <TableCell className="text-neutral-300 whitespace-nowrap">
+                    <TableCell className="font-medium">{user.name || "-"}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">
                       {user.date_of_birth
                         ? new Date(user.date_of_birth).toLocaleDateString("en-US", {
                             month: "short",
@@ -181,21 +171,21 @@ export default function UserList() {
                         : "-"}
                     </TableCell>
                     <TableCell
-                      className="text-neutral-300 max-w-xs truncate"
+                      className="text-muted-foreground max-w-xs truncate"
                       title={user.address}
                     >
                       {user.address || "-"}
                     </TableCell>
-                    <TableCell className="text-neutral-300 font-mono">
+                    <TableCell className="text-muted-foreground font-mono">
                       {user.bank_account_number
                         ? maskAccountNumber(user.bank_account_number)
                         : "-"}
                     </TableCell>
-                    <TableCell className="text-neutral-300 font-mono">
+                    <TableCell className="text-muted-foreground font-mono">
                       {user.ifsc_code || "-"}
                     </TableCell>
-                    <TableCell className="text-neutral-300">{user.branch || "-"}</TableCell>
-                    <TableCell className="text-neutral-300 whitespace-nowrap">
+                    <TableCell className="text-muted-foreground">{user.branch || "-"}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">
                       {user.joining_date
                         ? new Date(user.joining_date).toLocaleDateString("en-US", {
                             month: "short",
@@ -216,18 +206,18 @@ export default function UserList() {
               disabled={page === 1}
               onClick={() => setPage((p) => p - 1)}
               variant="secondary"
-              className="bg-neutral-800 text-white border-neutral-700 hover:bg-neutral-700 transition-colors duration-300"
+              className="bg-muted text-foreground hover:bg-muted/70"
             >
               Previous
             </Button>
-            <span className="text-neutral-300">
+            <span className="text-muted-foreground">
               Page {page} of {totalPages}
             </span>
             <Button
               disabled={page === totalPages}
               onClick={() => setPage((p) => p + 1)}
               variant="secondary"
-              className="bg-neutral-800 text-white border-neutral-700 hover:bg-neutral-700 transition-colors duration-300"
+              className="bg-muted text-foreground hover:bg-muted/70"
             >
               Next
             </Button>

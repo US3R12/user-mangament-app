@@ -2,3 +2,23 @@
 
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: 0 0% 100%;       /* light bg = white */
+  --color-foreground: 222.2 84% 4.9%;  /* light text = near black */
+  --color-border: 214.3 31.8% 91.4%;
+
+  --color-background-dark: 222.2 84% 4.9%; /* dark bg = near black */
+  --color-foreground-dark: 210 40% 98%;    /* dark text = near white */
+  --color-border-dark: 217.2 32.6% 17.5%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .dark body {
+    @apply bg-background-dark text-foreground-dark;
+  }
+}
