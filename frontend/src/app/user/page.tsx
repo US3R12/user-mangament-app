@@ -32,12 +32,37 @@ export default function UserForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✅ Validation rules
+  const validateForm = () => {
+    if (!/^[A-Za-z\s]+$/.test(formData.name)) {
+      alert("Name should only contain letters and spaces.");
+      return false;
+    }
+    if (!/^\d{9,18}$/.test(formData.bank_account_number)) {
+      alert("Bank account number must be 9–18 digits.");
+      return false;
+    }
+    if (!/^[A-Z]{4}0\d{6}$/.test(formData.ifsc_code.toUpperCase())) {
+      alert("Invalid IFSC code format. Example: SBIN0123456");
+      return false;
+    }
+    if (!/^[A-Za-z0-9\s]+$/.test(formData.branch)) {
+      alert("Branch name should only contain letters, numbers, and spaces.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return; // Stop if invalid
+
     setIsSubmitting(true);
-  
-  const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://strapi-backend-4xxv.onrender.com").replace(/\/$/, "");
-  
+
+    const API_URL = (process.env.NEXT_PUBLIC_API_URL ||
+      "https://strapi-backend-4xxv.onrender.com"
+    ).replace(/\/$/, "");
+
     try {
       const response = await fetch(`${API_URL}/api/user-details`, {
         method: "POST",
@@ -118,7 +143,6 @@ export default function UserForm() {
                   name="date_of_birth"
                   value={formData.date_of_birth}
                   onChange={handleChange}
-                  placeholder="dd-mm-yyyy"
                   required
                   className="mt-2 bg-neutral-800 dark:bg-gray-800 text-white border-neutral-700 placeholder:text-neutral-400"
                 />
@@ -193,7 +217,6 @@ export default function UserForm() {
                   name="joining_date"
                   value={formData.joining_date}
                   onChange={handleChange}
-                  placeholder="dd-mm-yyyy"
                   required
                   className="mt-2 bg-neutral-800 dark:bg-gray-800 text-white border-neutral-700 placeholder:text-neutral-400"
                 />
