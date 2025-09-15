@@ -32,6 +32,26 @@ export default function UserForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (!/^[A-Za-z\s]+$/.test(formData.name)) {
+      alert("Name should only contain letters and spaces.");
+      return false;
+    }
+    if (!/^\d{9,18}$/.test(formData.bank_account_number)) {
+      alert("Bank account number must be 9–18 digits.");
+      return false;
+    }
+    if (!/^[A-Z]{4}0\d{6}$/.test(formData.ifsc_code.toUpperCase())) {
+      alert("Invalid IFSC code format. Example: SBIN0123456");
+      return false;
+    }
+    if (!/^[A-Za-z0-9\s]+$/.test(formData.branch)) {
+      alert("Branch name should only contain letters, numbers, and spaces.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return; // Stop if invalid
