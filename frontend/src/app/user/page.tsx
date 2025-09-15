@@ -34,8 +34,46 @@ export default function UserForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // validation + API call (same as your version)
-  };
+        if (!validateForm()) return; // Stop if invalid
+
+    setIsSubmitting(true);
+
+    const API_URL = (process.env.NEXT_PUBLIC_API_URL ||
+      "https://strapi-backend-4xxv.onrender.com"
+    ).replace(/\/$/, "");
+
+    try {
+      const response = await fetch(`${API_URL}/api/user-details`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: formData }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to submit form: ${errorText}`);
+      }
+
+      await response.json();
+      alert("User saved successfully!");
+
+      setFormData({
+        name: "",
+        date_of_birth: "",
+        address: "",
+        bank_account_number: "",
+        ifsc_code: "",
+        branch: "",
+        joining_date: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };// validation + API call (same as your version)
+  
 
   const handleCancel = () => {
     setFormData({
