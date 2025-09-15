@@ -34,7 +34,7 @@ export default function UserForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-        if (!validateForm()) return; // Stop if invalid
+    if (!validateForm()) return; // Stop if invalid
 
     setIsSubmitting(true);
 
